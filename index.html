@@ -36,7 +36,7 @@
                 const p = document.createElement('p');
                 p.innerHTML = `${pd.name} price: ${pd.price} quantity: ${pd.quantity}
                 <button onclick="loadProduct('${pd._id}')">update</button> 
-                    <button onclick="deleteProduct('${pd._id}')">delete</button> 
+                    <button onclick="deleteProduct(event, '${pd._id}')">delete</button> 
                 `;
                 container.appendChild(p)
             });
@@ -78,13 +78,17 @@
            })
        }
 
-       function deleteProduct(id) {
+       function deleteProduct(event, id) {
+           
            fetch(`/delete/${id}`, {
                method: 'DELETE'
            })
            .then(res => res.json())
            .then(result => {
-               console.log("deleted successfully");
+            //    console.log("deleted successfully");
+                if(result) {
+                    event.target.parentNode.style.display = "none";
+                }
            })
        }
     </script>
